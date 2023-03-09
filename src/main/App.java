@@ -1,29 +1,35 @@
 package main;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 public class App {
     public static void main(String[] args) {
-
-        var result1 = List.of(
-                twoSum(new int[]{2, 7, 11, 15}, 9),
-                twoSum(new int[]{3, 2, 4}, 6),
-                twoSum(new int[]{3, 3}, 6),
-                twoSum(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, 26)
-        );
-
-        result1.forEach(x -> x.map(Arrays::toString).ifPresent(System.out::println));
-
+        assert 3 == lengthOfLongestSubstring("abcabcbb");
+        assert 1 == lengthOfLongestSubstring("bbbbb");
+        assert 3 == lengthOfLongestSubstring("pwwkew");
+        assert 11 == lengthOfLongestSubstring("ahheklscvytahgv");
+        assert 2 == lengthOfLongestSubstring("aab");
     }
 
-    public static Optional<int[]> twoSum(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++)
-            for (int j = i + 1; j < nums.length; j++)
-                if (nums[i] + nums[j] == target)
-                    return Optional.of(new int[]{i, j});
+    public static int lengthOfLongestSubstring(String s) {
+        StringBuilder substring = new StringBuilder();
+        char[] chars = s.toCharArray();
+        int longestStrLen = 0;
+        int result = 0;
 
-        return Optional.empty();
+        int start = 0;
+
+        for (int i = start; i < chars.length; i++) {
+            if (result >= chars.length - start) break;
+            if (!substring.toString().contains(String.valueOf(chars[i]))) {
+                substring.append(chars[i]);
+                longestStrLen++;
+                result = Math.max(result, longestStrLen);
+            } else {
+                longestStrLen = 0;
+                substring = new StringBuilder();
+                i = start++;
+            }
+
+        }
+        return result;
     }
 }
