@@ -1,5 +1,7 @@
 package main;
 
+import java.util.HashSet;
+
 public class App {
     public static void main(String[] args) {
         assert 3 == lengthOfLongestSubstring("abcabcbb");
@@ -10,7 +12,7 @@ public class App {
     }
 
     public static int lengthOfLongestSubstring(String s) {
-        StringBuilder substring = new StringBuilder();
+        HashSet<Character> substring = new HashSet<>();
         char[] chars = s.toCharArray();
         int longestStrLen = 0;
         int result = 0;
@@ -19,13 +21,13 @@ public class App {
 
         for (int i = start; i < chars.length; i++) {
             if (result >= chars.length - start) break;
-            if (!substring.toString().contains(String.valueOf(chars[i]))) {
-                substring.append(chars[i]);
+            if (!substring.contains(chars[i])) {
+                substring.add(chars[i]);
                 longestStrLen++;
                 result = Math.max(result, longestStrLen);
             } else {
                 longestStrLen = 0;
-                substring = new StringBuilder();
+                substring.clear();
                 i = start++;
             }
 
