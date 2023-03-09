@@ -1,29 +1,101 @@
 package main;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class App {
     public static void main(String[] args) {
+        int[] l1 = {2, 4, 3};
+        int[] l2 = {5, 6, 4};
 
-        var result1 = List.of(
-                twoSum(new int[]{2, 7, 11, 15}, 9),
-                twoSum(new int[]{3, 2, 4}, 6),
-                twoSum(new int[]{3, 3}, 6),
-                twoSum(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, 26)
-        );
+        ListNode rootNode1 = new ListNode(l1[0]);
+        ListNode rootNode2 = new ListNode(l2[0]);
 
-        result1.forEach(x -> x.map(Arrays::toString).ifPresent(System.out::println));
+        /* Make 1st linked list */
+        ListNode tempNode = rootNode1;
+
+        for (int i = 1; i < l1.length; i++) {
+            tempNode.next = new ListNode(l1[i]);
+            tempNode = tempNode.next;
+        }
+
+        /* Make 2nd linked list */
+
+        tempNode = rootNode2;
+
+        for (int i = 1; i < l2.length; i++) {
+            tempNode.next = new ListNode(l2[i]);
+            tempNode = tempNode.next;
+        }
+
+        /* Call method to retrieve sum linked list */
+
+        tempNode = addTwoNumbers(rootNode1, rootNode2);
+
+        /* TEST: iterate result linked list */
+
+        do {
+            System.out.println((char) tempNode.val);
+            tempNode = tempNode.next;
+            if (tempNode != null && tempNode.next == null) {
+                System.out.println((char) tempNode.val);
+            }
+        } while (tempNode != null && tempNode.next != null);
 
     }
 
-    public static Optional<int[]> twoSum(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++)
-            for (int j = i + 1; j < nums.length; j++)
-                if (nums[i] + nums[j] == target)
-                    return Optional.of(new int[]{i, j});
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        /* Iterate 1st linked list */
 
-        return Optional.empty();
+        StringBuilder sb = new StringBuilder();
+        int number1;
+        int number2;
+
+        ListNode tempNode = l1;
+
+        do {
+            sb.append(tempNode.val);
+            tempNode = tempNode.next;
+            if (tempNode != null && tempNode.next == null) {
+                sb.append(tempNode.val);
+            }
+        } while (tempNode != null && tempNode.next != null);
+
+        number1 = Integer.parseInt(sb.reverse().toString());
+
+        /* Iterate 2nd linked list */
+
+        sb = new StringBuilder();
+
+        tempNode = l2;
+
+        do {
+            sb.append(tempNode.val);
+            tempNode = tempNode.next;
+            if (tempNode != null && tempNode.next == null) {
+                sb.append(tempNode.val);
+            }
+        } while (tempNode != null && tempNode.next != null);
+
+        number2 = Integer.parseInt(sb.reverse().toString());
+
+        /* Building result linked list */
+
+        int sum = number1 + number2;
+
+        sb = new StringBuilder(String.valueOf(sum));
+        sb.reverse();
+
+        char[] digits = sb.toString().toCharArray();
+
+        ListNode rootNodeResult = new ListNode(digits[0]);
+
+        tempNode = rootNodeResult;
+
+        for (int i = 1; i < digits.length; i++) {
+            tempNode.next = new ListNode(digits[i]);
+            tempNode = tempNode.next;
+        }
+
+        return rootNodeResult;
     }
 }
