@@ -1,29 +1,26 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class App {
     public static void main(String[] args) {
-
-        var result1 = List.of(
-                twoSum(new int[]{2, 7, 11, 15}, 9),
-                twoSum(new int[]{3, 2, 4}, 6),
-                twoSum(new int[]{3, 3}, 6),
-                twoSum(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, 26)
-        );
-
-        result1.forEach(x -> x.map(Arrays::toString).ifPresent(System.out::println));
-
+        assert findMedianSortedArrays(new int[]{1, 3}, new int[]{2}) == 2.0;
+        assert findMedianSortedArrays(new int[]{1, 2}, new int[]{3, 4}) == 2.5;
     }
 
-    public static Optional<int[]> twoSum(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++)
-            for (int j = i + 1; j < nums.length; j++)
-                if (nums[i] + nums[j] == target)
-                    return Optional.of(new int[]{i, j});
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int[] nums = new int[nums1.length + nums2.length];
+        System.arraycopy(nums1, 0, nums, 0, nums1.length);
+        System.arraycopy(nums2, 0, nums, nums1.length, nums2.length);
+        Arrays.sort(nums);
+        int len = nums.length;
 
-        return Optional.empty();
+        if(len % 2 == 1) {
+            return nums[(len - 1) / 2];
+        } else {
+            return (nums[len/2] + nums[len/2-1]) / 2.0;
+        }
     }
 }
