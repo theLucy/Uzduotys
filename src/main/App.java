@@ -1,29 +1,47 @@
 package main;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        Random rnd = new Random();
 
-        var result1 = List.of(
-                twoSum(new int[]{2, 7, 11, 15}, 9),
-                twoSum(new int[]{3, 2, 4}, 6),
-                twoSum(new int[]{3, 3}, 6),
-                twoSum(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, 26)
+        Map<String, String> kombinacijos = Map.of(
+                "12", "Pralaimejote",
+                "13", "Laimejote",
+                "21", "Laimejote",
+                "23", "Pralaimejote",
+                "31", "Pralaimejote",
+                "32", "Laimejote"
         );
 
-        result1.forEach(x -> x.map(Arrays::toString).ifPresent(System.out::println));
+        for (; ; ) {
+            System.out.println("""
+                    Koki zenkla mesite?
+                    1 - Akmuo
+                    2 - Popierius
+                    3 - Zirkles
+                    4 - Nebenoriu zaisti
+                    """);
+            String zaidejas = in.nextLine();
 
-    }
+            if (zaidejas.equals("4")) break;
 
-    public static Optional<int[]> twoSum(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++)
-            for (int j = i + 1; j < nums.length; j++)
-                if (nums[i] + nums[j] == target)
-                    return Optional.of(new int[]{i, j});
+            String kompiuteris = String.valueOf(rnd.nextInt(1, 4));
 
-        return Optional.empty();
+            if (zaidejas.equals(kompiuteris))
+                System.out.println("Lygiosios!");
+            else
+                System.out.println(kombinacijos.getOrDefault(zaidejas + kompiuteris,
+                        "Pasirinkote neteisinga zenkla!"));
+
+        }
+
+        System.out.println("Aciu kad zaidete, zaidimas uzdaromas!");
+        in.close();
     }
 }
