@@ -1,29 +1,29 @@
 package main;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 public class App {
     public static void main(String[] args) {
+        int[] test1 = {1, 1, 2};
+        int[] test2 = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
 
-        var result1 = List.of(
-                twoSum(new int[]{2, 7, 11, 15}, 9),
-                twoSum(new int[]{3, 2, 4}, 6),
-                twoSum(new int[]{3, 3}, 6),
-                twoSum(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, 26)
-        );
+        System.out.println(removeDuplicates(test1)); // Expected 2
+        System.out.println(removeDuplicates(test2)); // Expected 5
 
-        result1.forEach(x -> x.map(Arrays::toString).ifPresent(System.out::println));
-
+        System.out.println(Arrays.toString(test1)); // [1, 2, ...]
+        System.out.println(Arrays.toString(test2)); // [0, 1, 2, 3, 4, ...]
     }
 
-    public static Optional<int[]> twoSum(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++)
-            for (int j = i + 1; j < nums.length; j++)
-                if (nums[i] + nums[j] == target)
-                    return Optional.of(new int[]{i, j});
+    public static int removeDuplicates(int[] nums) {
+        int x = nums[0];
+        int ptr = 1;
 
-        return Optional.empty();
+        for (int i = 1; i < nums.length; i++) {
+            if(nums[i] != x) {
+                x = nums[i];
+                nums[ptr++] = x;
+            }
+        }
+        return ptr;
     }
 }
