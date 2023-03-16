@@ -15,15 +15,12 @@ public class App {
     }
 
     public static int removeDuplicates(int[] nums) {
-        int x = nums[0];
-        int ptr = 1;
+        int ptr = 0;
 
         for (int i = 1; i < nums.length; i++) {
-            if(nums[i] != x) {
-                x = nums[i];
-                nums[ptr++] = x;
-            }
+            if(nums[i] != nums[ptr])
+                nums[++ptr] = nums[i];
         }
-        return ptr;
+        return ptr+1;
     }
 }
