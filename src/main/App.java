@@ -1,29 +1,19 @@
 package main;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 public class App {
     public static void main(String[] args) {
+        String s1 = "Hello World";
+        String s2 = "   fly me   to   the moon  ";
+        String s3 = "luffy is still joyboy";
 
-        var result1 = List.of(
-                twoSum(new int[]{2, 7, 11, 15}, 9),
-                twoSum(new int[]{3, 2, 4}, 6),
-                twoSum(new int[]{3, 3}, 6),
-                twoSum(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, 26)
-        );
-
-        result1.forEach(x -> x.map(Arrays::toString).ifPresent(System.out::println));
-
+        System.out.println(lengthOfLastWord(s1)); // Expected: 5
+        System.out.println(lengthOfLastWord(s2)); // Expected: 4
+        System.out.println(lengthOfLastWord(s3)); // Expected: 6
     }
 
-    public static Optional<int[]> twoSum(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++)
-            for (int j = i + 1; j < nums.length; j++)
-                if (nums[i] + nums[j] == target)
-                    return Optional.of(new int[]{i, j});
-
-        return Optional.empty();
+    public static int lengthOfLastWord(String s) {
+        s = s.strip();
+        return s.substring(s.lastIndexOf(" ") + 1)
+                .length();
     }
 }
