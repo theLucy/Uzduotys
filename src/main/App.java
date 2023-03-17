@@ -1,29 +1,43 @@
 package main;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 public class App {
     public static void main(String[] args) {
+        String haystack1 = "sadbutsad", needle1 = "sad";
+        String haystack2 = "leetcode", needle2 = "leeto";
+        String haystack3 = "a", needle3 = "a";
 
-        var result1 = List.of(
-                twoSum(new int[]{2, 7, 11, 15}, 9),
-                twoSum(new int[]{3, 2, 4}, 6),
-                twoSum(new int[]{3, 3}, 6),
-                twoSum(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, 26)
-        );
-
-        result1.forEach(x -> x.map(Arrays::toString).ifPresent(System.out::println));
+        System.out.println(strStr(haystack1, needle1)); // Expected 0
+        System.out.println(strStr(haystack2, needle2)); // Expected -1
+        System.out.println(strStr(haystack3, needle3)); // Expected 0
 
     }
 
-    public static Optional<int[]> twoSum(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++)
-            for (int j = i + 1; j < nums.length; j++)
-                if (nums[i] + nums[j] == target)
-                    return Optional.of(new int[]{i, j});
+    public static int strStr(String haystack, String needle) {
 
-        return Optional.empty();
+        if (needle.length() > haystack.length())
+            return -1;
+
+        int index = -1;
+        boolean isMatch = true;
+
+        char[] hay = haystack.toCharArray();
+        char[] nee = needle.toCharArray();
+
+        for (int i = 0, iTmp; i < hay.length; i++) {
+            if (hay.length - i < nee.length)
+                return -1;
+            iTmp = i;
+            for (char c : nee) {
+                isMatch = true;
+                if (hay[iTmp++] != c) {
+                    isMatch = false;
+                    break;
+                }
+            }
+            if (isMatch)
+                return i;
+        }
+
+        return index;
     }
 }
