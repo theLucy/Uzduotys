@@ -1,29 +1,29 @@
 package main;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 public class App {
     public static void main(String[] args) {
-
-        var result1 = List.of(
-                twoSum(new int[]{2, 7, 11, 15}, 9),
-                twoSum(new int[]{3, 2, 4}, 6),
-                twoSum(new int[]{3, 3}, 6),
-                twoSum(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, 26)
-        );
-
-        result1.forEach(x -> x.map(Arrays::toString).ifPresent(System.out::println));
-
+        System.out.println(addBinary("11", "1")); // Expected "100"
+        System.out.println(addBinary("1010", "1011")); //Expected "10101"
     }
 
-    public static Optional<int[]> twoSum(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++)
-            for (int j = i + 1; j < nums.length; j++)
-                if (nums[i] + nums[j] == target)
-                    return Optional.of(new int[]{i, j});
+    public static String addBinary(String a, String b) {
+        StringBuilder sb = new StringBuilder();
+        int carry = 0;
 
-        return Optional.empty();
+        int i = a.length() - 1;
+        int j = b.length() - 1;
+
+        while (i >= 0 || j >= 0 || carry == 1) {
+            if (i >= 0) carry += a.charAt(i) - '0';
+            if (j >= 0) carry += b.charAt(j) - '0';
+
+            sb.append(carry % 2);
+            carry = carry / 2;
+
+            i--;
+            j--;
+        }
+
+        return sb.reverse().toString();
     }
 }
