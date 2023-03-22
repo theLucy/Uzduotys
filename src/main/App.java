@@ -1,29 +1,35 @@
 package main;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 public class App {
     public static void main(String[] args) {
-
-        var result1 = List.of(
-                twoSum(new int[]{2, 7, 11, 15}, 9),
-                twoSum(new int[]{3, 2, 4}, 6),
-                twoSum(new int[]{3, 3}, 6),
-                twoSum(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, 26)
-        );
-
-        result1.forEach(x -> x.map(Arrays::toString).ifPresent(System.out::println));
-
+        System.out.println(convertToTitle(1)); // Expected "A
+        System.out.println(convertToTitle(28)); // Expected "AB"
+        System.out.println(convertToTitle(701)); // Expected "ZY"
     }
 
-    public static Optional<int[]> twoSum(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++)
-            for (int j = i + 1; j < nums.length; j++)
-                if (nums[i] + nums[j] == target)
-                    return Optional.of(new int[]{i, j});
+    public static String convertToTitle(int i) {
+        i--;
+        int quot = i / 26;
+        int rem = i % 26;
+        char letter = (char) ((int) 'A' + rem);
+        if (quot == 0) {
+            return "" + letter;
+        } else {
+            return convertToTitle(quot) + letter;
+        }
+    }
 
-        return Optional.empty();
+    /* Alternative solution (Needs fixing!!) */
+    public static String convertToTitle2(int columnNumber) {
+        StringBuilder sb = new StringBuilder();
+        char[] digits = {'.', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+                'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U',
+                'V', 'W', 'X', 'Y', 'Z'};
+        int n = 26;
+        while (columnNumber > 0) {
+            sb.append(digits[columnNumber % n]);
+            columnNumber /= n;
+        }
+        return sb.reverse().toString();
     }
 }
