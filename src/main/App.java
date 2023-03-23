@@ -2,36 +2,28 @@ package main;
 
 public class App {
 
-    public static ListNode makeList(int... values) {
-        ListNode tail = new ListNode(values[values.length - 1]);
-        ListNode node = null;
-        for (int i = 0; i < values.length - 1; i++) {
-            node = new ListNode(values[values.length - 1 - 1 - i], tail);
-            tail = node;
-        }
-        return node;
-    }
-
-    public static void printList(ListNode head) {
-        System.out.print("List: { ");
-        while (head != null) {
-            System.out.print(head.val + " ");
-            head = head.next;
-        }
-        System.out.println("}");
-    }
-
     public static void main(String[] args) {
-        Solution sol = new Solution();
-        ListNode head1 = makeList(7, 7, 7, 7);
+        MyList<Integer> list1 = new MyList<>(1, 2, 6, 3, 4, 5, 6);
+        MyList<Integer> list2 = new MyList<>();
+        MyList<Integer> list3 = new MyList<>(7, 7, 7, 7);
 
-        ListNode head = head1;
+        println("Lists before removal:");
+        println(list1);
+        println(list2);
+        println(list3);
 
-        printList(head);
+        list1.removeElements(6);
+        list2.removeElements(1);
+        list3.removeElements(7);
 
-        head = sol.removeElements(head1, 7);
+        println("Lists after removal:");
+        println(list1);
+        println(list2);
+        println(list3);
 
-        printList(head);
+    }
 
+    public static void println(Object value) {
+        System.out.println(value);
     }
 }
