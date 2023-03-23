@@ -27,6 +27,10 @@ public class MyList<T> {
     public final void push(T value, T... values) {
         head = new ListNode<>(value, head);
         length++;
+        for (T t : values) {
+            head = new ListNode<>(t, head);
+            length++;
+        }
     }
 
     /**
