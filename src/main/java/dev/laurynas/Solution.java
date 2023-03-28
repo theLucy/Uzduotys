@@ -1,5 +1,5 @@
-package main;
+package dev.laurynas;
 
 public class Solution {
-    
+
 }
